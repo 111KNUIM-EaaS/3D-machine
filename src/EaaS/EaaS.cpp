@@ -30,6 +30,10 @@ void loop_eaas(void *parameter) {
         count+=1;
 
         switch (machine_status) {
+            case 0:
+                task_status = 0;
+                break;
+
             case 1:
                 task_status = 1;
                 set_machine_status(2);

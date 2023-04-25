@@ -30,6 +30,17 @@ void setup() {
 
 void loop() {
     EaaS_OTA();
+    display.clearDisplay();
+
+    // show test
+    display.setCursor(0, 0);
+    display.setTextSize(1);
+    display.setTextColor(SSD1306_WHITE);
+    if(task_status == 0) {
+        display.printf("status: stop");
+    } else {
+        display.printf("status: run");
+    }
 
     if(machine_task_count >= _3D_MODULE_LENGTH) {
         machine_task_count = 0;
@@ -45,7 +56,6 @@ void loop() {
             vTaskDelay(30 / portTICK_PERIOD_MS);
 
         } else {
-            display.clearDisplay();
             display.drawBitmap(0, 0, display_buffer, 128, 64, 1);
             display.display();
 
@@ -53,7 +63,12 @@ void loop() {
         }
 
         machine_task_count++;
-    } 
+    } else {
+        if(task_status == 0) {
+            display.drawBitmap(0, 0, _STOP, 128, 64, 1);
+            display.display();
+        }
+    }
 
     delay(30);
 }
