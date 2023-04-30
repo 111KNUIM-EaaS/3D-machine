@@ -65,6 +65,15 @@ jobs:
       #   run: |
       #     sed -i "s/0\.0\.0/$(git describe --tags)/" ./include/version.h
 
+      - uses: actions/cache@v3
+        with:
+          path: |
+            path: ~/.cache/pip
+            path: ~/.platformio
+          key: ${{ runner.os }}-platformio-${{ hashFiles('**/platformio.ini') }}
+          restore-keys: |
+            ${{ runner.os }}-platformio-
+
       - name: Install PlatformIO python
         uses: actions/setup-python@v4
         with:
@@ -72,6 +81,14 @@ jobs:
 
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
+
+      - name: Install PlatformIO espressif32
+        run: pio platform install espressif32@6.1.0
+
+      - name: Show cache 
+        run: |
+          ls -al ~/.cache/pip
+          ls -al ~/.platformio
 
       - name: Build PlatformIO Project
         run: pio run -e OTA
