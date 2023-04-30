@@ -1,7 +1,7 @@
 #include <Arduino.h>
+#include <EaaS.h>
 
 #include "machine.h"
-#include "EaaS/EaaS.h"
 
 #include <esp_log.h>
 #include <Adafruit_SSD1306.h>
